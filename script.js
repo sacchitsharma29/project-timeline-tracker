@@ -234,7 +234,7 @@ function renderProjectView() {
             <div class="milestone-marker">
                 <i data-lucide="check"></i>
             </div>
-            <div class="milestone-content" onclick="toggleMilestone(${state.activeProjectId === project.id ? `'${project.id}'` : ''}, '${m.id}')">
+            <div class="milestone-content" onclick="toggleMilestone('${project.id}', '${m.id}')">
                 <div class="milestone-header">
                     <h3>${escapeHtml(m.title)}</h3>
                     <span class="milestone-urgency urgency-${m.urgency}">${m.urgency}</span>

@@ -375,6 +375,13 @@ body {
     border-color: var(--error);
     box-shadow: 0 0 15px rgba(248, 113, 113, 0.4);
     background: var(--bg-main);
+    animation: marker-pulse 2s infinite;
+}
+
+@keyframes marker-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(248, 113, 113, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0); }
 }
 
 .milestone-marker i {
@@ -557,16 +564,90 @@ label {
     letter-spacing: 1px;
 }
 
-input, textarea, select {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    padding: 0.75rem;
-    border-radius: 12px;
-    color: var(--text-primary);
-    outline: none;
-    font-size: 0.9rem;
+.sidebar-footer {
+    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
+
+.modal-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.color-picker {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.color-option {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.color-option.selected {
+    border-color: white;
+    transform: scale(1.15);
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+/* Modal text and layout refinements */
+.modal-content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--accent-indigo);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.hidden { display: none; }
+
+.empty-state {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.empty-content {
+    max-width: 400px;
+}
+
+.empty-icon {
+    width: 64px;
+    height: 64px;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.empty-content h2 {
+    margin-bottom: 0.75rem;
+}
+
+.empty-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.text-error { color: var(--error); }
+.text-success { color: var(--success); }
+
 
 /* Confetti */
 #confetti-canvas {
