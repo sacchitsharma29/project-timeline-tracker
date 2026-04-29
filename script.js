@@ -265,6 +265,12 @@ function toggleMilestone(projectId, milestoneId) {
     updateMilestone(projectId, milestoneId, { status: newStatus });
 }
 
+// Global exposure for dynamically generated HTML handlers
+window.toggleMilestone = toggleMilestone;
+window.openEditMilestone = openEditMilestone;
+window.confirmDeleteMilestone = confirmDeleteMilestone;
+window.setActiveProject = setActiveProject;
+
 function setupEventListeners() {
     // Project Search
     document.getElementById('project-search').addEventListener('input', renderSidebar);
