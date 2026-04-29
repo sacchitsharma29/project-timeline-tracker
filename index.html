@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronos | Project Roadmap</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <div class="mesh-gradient"></div>
+    <div id="app" class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i data-lucide="clock" class="logo-icon"></i>
+                    <span>Chronos</span>
+                </div>
+                <button id="add-project-btn" class="icon-btn" title="Add Project">
+                    <i data-lucide="plus"></i>
+                </button>
+            </div>
+            
+            <div class="search-box">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" id="project-search" placeholder="Search projects...">
+            </div>
+
+            <nav class="project-list-container">
+                <ul id="project-list">
+                    <!-- Projects will be injected here -->
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="export-btn" class="subtle-btn">
+                    <i data-lucide="download"></i> Export JSON
+                </button>
+                <button id="import-btn-trigger" class="subtle-btn">
+                    <i data-lucide="upload"></i> Import JSON
+                </button>
+                <input type="file" id="import-btn" style="display: none;" accept=".json">
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Stats Bar -->
+            <header class="top-bar">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Projects</span>
+                        <span id="stat-projects" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Completed</span>
+                        <span id="stat-completed" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Overdue</span>
+                        <span id="stat-overdue" class="stat-value text-error">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Overall Progress</span>
+                        <div class="stat-progress-container">
+                            <span id="stat-progress" class="stat-value">0%</span>
+                            <div class="progress-bar-mini">
+                                <div id="stat-progress-fill" class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Project Detail View -->
+            <section id="project-view" class="project-view hidden">
+                <div class="project-header-info">
+                    <div>
+                        <h1 id="current-project-name">Project Name</h1>
+                        <p id="current-project-desc" class="project-description">Description goes here.</p>
+                        <div class="project-meta">
+                            <span class="meta-item"><i data-lucide="calendar"></i> <span id="current-project-dates">Jan 1 - Dec 31</span></span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <button id="add-milestone-btn" class="primary-btn">
+                            <i data-lucide="plus-circle"></i> Add Milestone
+                        </button>
+                        <button id="edit-project-btn" class="subtle-btn" title="Edit Project">
+                            <i data-lucide="settings"></i>
+                        </button>
+                        <button id="delete-project-btn" class="danger-btn" title="Delete Project">
+                            <i data-lucide="trash-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="milestone-filters">
+                    <button class="filter-chip active" data-filter="all">All</button>
+                    <button class="filter-chip" data-filter="pending">Pending</button>
+                    <button class="filter-chip" data-filter="in-progress">In Progress</button>
+                    <button class="filter-chip" data-filter="completed">Completed</button>
+                    <button class="filter-chip" data-filter="overdue">Overdue</button>
+                </div>
+
+                <!-- Timeline Container -->
+                <div class="timeline-container">
+                    <div id="timeline" class="timeline">
+                        <!-- Milestones will be injected here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Empty State -->
+            <section id="empty-state" class="empty-state">
+                <div class="empty-content">
+                    <i data-lucide="kanban" class="empty-icon"></i>
+                    <h2>No Project Selected</h2>
+                    <p>Select a project from the sidebar or create a new one to get started.</p>
+                    <button id="empty-add-project-btn" class="primary-btn">Create Your First Project</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content glass">
+            <h2 id="project-modal-title">Create New Project</h2>
+            <form id="project-form">
+                <div class="form-group">
+                    <label for="p-name">Project Name</label>
+                    <input type="text" id="p-name" required placeholder="e.g. Portfolio Redesign">
+                </div>
+                <div class="form-group">
+                    <label for="p-desc">Description</label>
+                    <textarea id="p-desc" rows="3" placeholder="Briefly describe your project..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="p-start">Start Date</label>
+                        <input type="date" id="p-start" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="p-end">Target End Date</label>
+                        <input type="date" id="p-end" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Color Tag</label>
+                    <div class="color-picker" id="p-color-picker">
+                        <!-- Colors generated by JS -->
+                    </div>
+                    <input type="hidden" id="p-color" value="#6366f1">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="subtle-btn closeModal">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Milestone Modal -->
+    <div id="milestone-modal" class="modal">
+        <div class="modal-content glass">
+            <h2 id="milestone-modal-title">Add Milestone</h2>
+            <form id="milestone-form">
+                <div class="form-group">
+                    <label for="m-title">Milestone Title</label>
+                    <input type="text" id="m-title" required placeholder="e.g. Design System V1">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="m-date">Due Date</label>
+                        <input type="date" id="m-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="m-urgency">Urgency</label>
+                        <select id="m-urgency">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="m-notes">Notes</label>
+                    <textarea id="m-notes" rows="2" placeholder="Tasks, goals, or requirements..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="subtle-btn closeModal">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Milestone</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
